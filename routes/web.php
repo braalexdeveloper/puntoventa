@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layouts/admin');
-});
+})->name('home');
 
 
 Route::resource('categories',CategoryController::class)->names('categories');

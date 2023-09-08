@@ -1,0 +1,14 @@
+.item-form label{
+    margin-bottom: 0px;
+}
+
+.item-form input,.item-form select{
+    
+    border: 1px solid #c9c7c7;
+    padding-left: 0.5rem;
+}
+
+
+.item-form input:focus,.item-form select:focus{
+    border: 1px solid rgb(223, 2, 94);
+}
