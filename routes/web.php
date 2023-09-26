@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts/admin');
+    return view('auth/login');
 })->name('home');
 
-
+Auth::routes();
 Route::resource('categories',CategoryController::class)->names('categories');
 Route::resource('clients',ClientController::class)->names('clients');
 Route::resource('products',ProductController::class)->names('products');
@@ -31,3 +31,7 @@ Route::resource('providers',ProviderController::class)->names('providers');
 Route::resource('purchases',PurchaseController::class)->names('purchases');
 Route::resource('sales',SaleController::class)->names('sales');
 
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

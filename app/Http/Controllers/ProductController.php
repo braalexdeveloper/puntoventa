@@ -34,15 +34,20 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
+       $product=$request->all();
+    
         if($request->hasFile('image')){
           $file=$request->file('image');
           $image_name=time()."_".$file->getClientOriginalName();
-          $file->move(public_path("/image",$image_name));
+          $file->move("image/",$image_name);
+          $product['image']=$image_name;
         }
-        $product=Product::create($request->all()+['image'=>$image_name]);
-        $product->update(['code'=>$product->id]);
+        
+        $product2=Product::create($product);
+        $product2->update(['code'=>$product2->id]);
 
         return redirect()->route('products.index');
+    
     }
 
     /**
@@ -69,7 +74,15 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $prod=$request->all();
+        if($request->hasFile('image')){
+            $file=$request->file('image');
+            $image_name=time()."_".$file->getClientOriginalName();
+            $file->move("image/",$image_name);
+            $prod['image']=$image_name;
+          }
+
+        $product->update($prod);
         return redirect()->route('products.index');
     }
 

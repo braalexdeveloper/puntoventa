@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Http\Requests\Purchase\StoreRequest;
 use App\Http\Requests\Purchase\UpdateRequest;
+use App\Models\Product;
 use App\Models\Provider;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $purchases = Purchase::get();
@@ -21,7 +30,8 @@ class PurchaseController extends Controller
     public function create()
     {
         $providers = Provider::get();
-        return view('admin.purchase.create', compact('providers'));
+        $products = Product::get();
+        return view('admin.purchase.create', compact('providers', 'products'));
     }
 
     /**
@@ -29,8 +39,12 @@ class PurchaseController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $purchase = Purchase::create($request->all());
-
+        $purchaseData=$request->all();
+        $purchaseData['purchase_date']=Carbon::now('America/Lima');
+        $purchaseData['user_id']=Auth::user()->id;
+        //dd($purchaseData);
+        $purchase = Purchase::create($purchaseData);
+        
         foreach ($request->product_id as $key => $product) {
             $results[] = array(
                 "product_id" => $request->product_id[$key],

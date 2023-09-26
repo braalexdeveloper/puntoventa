@@ -4,7 +4,7 @@
 </div>
 <div class="mb-3 item-form">
     <label class="form-label">Precio de venta</label>
-    <input type="number" name="sell_price" value="{{isset($product) ? $product->sell_price :''}}" class="form-control">
+    <input type="text" name="sell_price" value="{{isset($product) ? $product->sell_price :''}}" class="form-control">
 
 </div>
 
@@ -12,7 +12,7 @@
     <label class="form-label">Categoria</label>
     <select name="category_id" class="form-select">
         @foreach($categories as $category)
-         <option value="{{$category->id}}">{{$category->name}}</option>
+         <option value="{{$category->id}}" {{ (isset($product) && $product->category_id==$category->id) ? 'selected' : ''}}>{{$category->name}}</option>
         @endforeach
     </select>
 
@@ -22,11 +22,13 @@
     <label class="form-label">Proveedor</label>
     <select name="provider_id" class="form-select">
         @foreach($providers as $provider)
-         <option value="{{$provider->id}}">{{$provider->name}}</option>
+         <option value="{{$provider->id}}" {{ (isset($product) && $product->provider_id==$provider->id) ? 'selected' : ''}}>{{$provider->name}}</option>
         @endforeach
     </select>
 
 </div>
+
+
 
 <div class="mb-3 item-form">
 <label class="form-label">Imagen</label>
